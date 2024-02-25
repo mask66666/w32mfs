@@ -1,9 +1,16 @@
 #include <iostream>
 #include <array>
 #include <windows.h>
+#include <thread>
+#include <chrono>
 using namespace std;
 
 #define WHITE {255, 255, 255}
+
+void sleep(int miliseconds)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(miliseconds));
+}
 
 COLORREF get_pixel_color(int x, int y)
 {
@@ -30,7 +37,7 @@ std::array<int, 3> color_to_array(COLORREF color)
     return rgb_return;
 }
 
-bool copeare_colors(const std::array<int, 3>& color1, const std::array<int, 3>& color2, int tolerance)
+bool compeare_colors(const std::array<int, 3>& color1, const std::array<int, 3>& color2, int tolerance)
 {
     return (abs(color1[0] - color2[0]) <= tolerance &&
             abs(color1[1] - color2[1]) <= tolerance &&
@@ -43,32 +50,28 @@ void click()
     mouse_event(MOUSEEVENTF_LEFTUP, 0, 0 ,0 ,0);
 }
 
+void fish()
+{
+    sleep(500);
+    click();
+    int x, y;
+    get_cursor_pos(x, y);
+    COLORREF color = get_pixel_color(x, y);
+    std::array color_rgb = color_to_array(color);
+    bool res = compeare_colors(color_rgb, WHITE, 30);
+    while (!res)
+    {
+        get_cursor_pos(x, y);
+        color = get_pixel_color(x, y);
+        color_rgb = color_to_array(color);
+        res = compeare_colors(color_rgb, WHITE, 30);
+    }
+    sleep(100);
+    click();
+}
+
 int main()
 {
-    int x, y;
-    int itr = 0;
-    while (true)
-    {
-        itr++;
-        get_cursor_pos(x, y);
-        std::cout << x << " " << y << std::ends;
-        COLORREF color = get_pixel_color(x, y);
-        std::cout << " " << color << std::ends;
-        std::array<int, 3> color_rgb = color_to_array(color);
-        for (int i = 0; i < 3; i++)
-        {
-            std::cout << " " << color_rgb[i] << std::ends;
-        }
-
-        bool res = copeare_colors(color_rgb, WHITE, 20);
-        std::cout << " " << res << std::ends;
-
-
-        std::cout << " " << std::endl;
-        if (itr > 300)
-        {
-            break;
-        }
-    }
+    fish();
     return 0;
 }
