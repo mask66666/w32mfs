@@ -21,6 +21,12 @@ void get_cursor_pos(int& x, int& y)
     y = cursor_pos.y;
 }
 
+void click()
+{
+    mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0 ,0 ,0);
+    mouse_event(MOUSEEVENTF_LEFTUP, 0, 0 ,0 ,0);
+}
+
 int main()
 {
     int x, y;
@@ -30,10 +36,11 @@ int main()
         itr++;
         get_cursor_pos(x, y);
         std::cout << x << " " << y << std::endl;
-        if (itr > 30000)
+        if (itr > 3000)
         {
             break;
         }
     }
+    click();
     return 0;
 }
