@@ -6,8 +6,8 @@
 using namespace std;
 
 #define WHITE {255, 255, 255}
-#define BAR_X 1491
-#define BAR_Y 237
+#define BAR_X 1729 // normal: 1491 left half: 1729
+#define BAR_Y 239 // normal: 237 left half: 239
 
 void sleep(int miliseconds)
 {
@@ -89,11 +89,24 @@ void click_to_fill_bar()
 
 int main()
 {
+    int sucess = 0;
+    int fail = 0;
     sleep(3000);
     while (true)
     {
         fish();
         sleep(500);
+        // stats
+        COLORREF color = get_pixel_color(BAR_X, BAR_Y);
+        std::array color_rgb = color_to_array(color);
+        if (compeare_colors(color_rgb, WHITE, 30))
+        {
+            sucess++;
+        } else
+        {
+            fail++;
+        }
+        std::cout << "sucesses: " << sucess << ", fails: " << fail << std::endl;
         click_to_fill_bar();
         sleep(200);
     }
