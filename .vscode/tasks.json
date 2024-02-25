@@ -10,7 +10,8 @@
         "${file}",
         "-o",
         "${fileDirname}\\${fileBasenameNoExtension}.exe",
-        "-lstdc++"  // <-- Added option to link the standard library
+        "-lstdc++",
+        "-lgdi32"
       ],
       "options": {
         "cwd": "${fileDirname}"
