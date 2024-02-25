@@ -6,6 +6,8 @@
 using namespace std;
 
 #define WHITE {255, 255, 255}
+#define BAR_X 1491
+#define BAR_Y 237
 
 void sleep(int miliseconds)
 {
@@ -22,7 +24,7 @@ COLORREF get_pixel_color(int x, int y)
 
 void get_cursor_pos(int& x, int& y)
 {
-    POINT cursor_pos;
+	POINT cursor_pos;
     GetCursorPos(&cursor_pos);
     x = cursor_pos.x;
     y = cursor_pos.y;
@@ -52,11 +54,11 @@ void click()
 
 void fish()
 {
-    sleep(500);
+    sleep(750);
     click();
     int x, y;
     get_cursor_pos(x, y);
-    COLORREF color = get_pixel_color(x, y);
+    COLORREF color = get_pixel_color(x + 1, y - 2);
     std::array color_rgb = color_to_array(color);
     bool res = compeare_colors(color_rgb, WHITE, 30);
     while (!res)
@@ -70,8 +72,30 @@ void fish()
     click();
 }
 
+void click_to_fill_bar()
+{
+    COLORREF color = get_pixel_color(BAR_X, BAR_Y);
+    std::array color_rgb = color_to_array(color);
+    bool res = compeare_colors(color_rgb, WHITE, 30);
+    while (res)
+    {
+        color = get_pixel_color(BAR_X, BAR_Y);
+        color_rgb = color_to_array(color);
+        res = compeare_colors(color_rgb, WHITE, 30);
+        click();
+        sleep(50);
+    }
+}
+
 int main()
 {
-    fish();
+    sleep(3000);
+    while (true)
+    {
+        fish();
+        sleep(500);
+        click_to_fill_bar();
+        sleep(200);
+    }
     return 0;
 }
