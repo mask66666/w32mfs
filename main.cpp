@@ -33,8 +33,8 @@ void get_cursor_pos(int& x, int& y)
 std::array<int, 3> color_to_array(COLORREF color)
 {
     int rgb1 = GetRValue(color);
-    int rgb2 = GetRValue(color);
-    int rgb3 = GetRValue(color);
+    int rgb2 = GetBValue(color);
+    int rgb3 = GetBValue(color);
     std::array<int, 3> rgb_return = {rgb1, rgb2, rgb3};
     return rgb_return;
 }
