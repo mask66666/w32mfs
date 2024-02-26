@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <thread>
 #include <chrono>
+#include <fstream>
 using namespace std;
 
 #define WHITE {255, 255, 255}
@@ -106,6 +107,17 @@ int main()
         {
             fail++;
         }
+
+        std::ofstream outFile("c:/Users/Damian/Desktop/w32mfs/data/stats.txt", std::ios::out);
+
+        if (!outFile)
+        {
+            std::cout << "error accuered in opening file" << std::endl;
+        }
+
+        outFile << sucess << "\n" << fail << "\n";
+        outFile.close();
+
         std::cout << "sucesses: " << sucess << ", fails: " << fail << std::endl;
         click_to_fill_bar();
         sleep(200);
