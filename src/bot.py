@@ -1,7 +1,7 @@
 import discord
 import time
 
-TOKEN = "MTIwNTYwODMwMDc3NTg2NjQzMA.GZq4Uu.hxTcdzc5zRGIyZcehgU5ngmFwBVU-3Abjt8aO8"
+TOKEN = "TOKEN"
 
 intents = discord.Intents.default()
 
