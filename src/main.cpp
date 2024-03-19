@@ -108,7 +108,7 @@ int main()
             fail++;
         }
 
-        std::ofstream outFile("c:/Users/Damian/Desktop/w32mfs/data/stats.txt", std::ios::out);
+        std::ofstream outFile("../data/stats.txt", std::ios::out);
 
         if (!outFile)
         {
